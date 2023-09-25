@@ -1,0 +1,36 @@
+import { Box, Container, HStack, Link as ChakraLink } from "@chakra-ui/react";
+import { useAuth } from "react-oidc-context";
+import { Link as RouterLink, useNavigate } from "@tanstack/react-router";
+
+import useCart from "../hooks/useCart";
+
+export default function Header() {
+  const navigate = useNavigate({ from: '/backend' })
+  const auth = useAuth()
+  const { data: cart } = useCart()
+
+  const NavItem = (props) => (
+    <ChakraLink
+      as={RouterLink}
+      fontSize='lg'
+      activeProps={{ style: { fontWeight: 'bold' } }}
+      {...props}>{props.name}</ChakraLink>)
+
+  const cartSize = cart ? ` (${cart?.items.length})` : ''
+
+  return (
+    <Box p={4} bg='gray.50' py={6}>
+      <HStack spacing={8} justify='center'>
+        <NavItem name='Katalog' to='/' />
+        <NavItem name={`Warenkorb${cartSize}`} to='/cart' />
+        {auth.isAuthenticated
+          && <NavItem name='Abmelden' onClick={() => {
+            auth.removeUser()
+          }} />
+          || <NavItem name='Anmelden' onClick={() => auth.signinRedirect()} />}
+        {auth.user?.profile.client_roles.includes('admin')
+          && <NavItem name='Backend' to='/backend' />}
+      </HStack>
+    </Box>
+  )
+}

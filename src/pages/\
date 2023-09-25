@@ -1,0 +1,18 @@
+import { Container, Flex, Stepper } from '@chakra-ui/react';
+import { Link } from '@tanstack/react-router';
+import { useState } from 'react';
+import Cart from '../components/Cart'
+import CheckoutDetails from '../components/CheckoutDetails'
+
+export default function Checkout() {
+  const [paymentScreen, setPaymentScreen] = useState(false)
+
+  return (
+    <Container maxW='container.lg' p={0}>
+      <Flex h={{base: 'auto', md: '100vh'}} py={[0, 10, 20]} direction={{base: 'column-reverse', md: 'row'}}>
+        <CheckoutDetails />
+        <Cart />
+      </Flex>
+    </Container>
+  )
+}
