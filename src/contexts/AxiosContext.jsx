@@ -19,12 +19,19 @@ export const AxiosProvider = ({ children }) => {
 
   authAxios.interceptors.request.use(
     config => {
-      if (!config.headers.Authorization && auth.user?.access_token) {
+      if (!config.headers.Authorization && auth.isAuthenticated && auth.user?.access_token) {
         config.headers.Authorization = `Bearer ${auth.user?.access_token}`
       }
-      config.params = {
-        ...config.params,
-        session_id: uuid
+      if (config.method == 'get') {
+        config.params = {
+          ...config.params,
+          session_id: uuid
+        }
+      } else {
+        config.data = {
+          ...config.data,
+          session_id: uuid
+        }
       }
       return config
     },
