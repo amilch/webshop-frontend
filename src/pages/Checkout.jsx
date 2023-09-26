@@ -8,10 +8,12 @@ import CheckoutShipping from '../components/CheckoutShipping'
 import CheckoutPayment from '../components/CheckoutPayment'
 import useCart from '../hooks/useCart';
 import useCreateOrder from '../hooks/useCreateOrder';
+import useDeleteCart from '../hooks/useDeleteCart';
 
 export default function Checkout() {
   const { data: cart } = useCart()
   const createOrder = useCreateOrder()
+  const deleteCart = useDeleteCart()
   const [paymentScreen, setPaymentScreen] = useState(false)
   const [shippingAddress, setShippingAddress] = useState({})
   const [paymentDetails, setPaymentDetails] = useState({})
@@ -37,6 +39,7 @@ export default function Checkout() {
     }
     createOrder.mutate(payload, {
       onSuccess: () => {
+        deleteCart.mutate()
         setOrderSuccessful(true)
       },
       onError: (e) => { console.log(`error creating order: ${e}`) },
