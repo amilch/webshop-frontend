@@ -2,7 +2,7 @@ import { NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDec
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
 import useOrders from '../../hooks/useOrders';
-import { OrderStatus } from '../../utils';
+import { OrderStatus, formatDate } from '../../utils';
 import useUpdateOrder from '../../hooks/useUpdateOrder';
 
 export default function BackendBilling() {
@@ -88,7 +88,7 @@ export default function BackendBilling() {
                 <Th>created</Th>
                 <Th isNumeric>total</Th>
                 <Th>status</Th>
-                <Th>email</Th>
+                <Th>mail</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -102,10 +102,10 @@ export default function BackendBilling() {
                     {order.id}
                     </LinkOverlay>
                   </Td>
-                  <Td>{order.created}</Td>
+                  <Td>{ formatDate(order.created) }</Td>
                   <Td isNumeric>{order.total} €</Td>
                 <Td>{OrderStatus[order.status]}</Td>
-                <Td>{order.email}d</Td>
+                <Td>{order.mail}</Td>
                 </LinkBox>
               )}
             </Tbody>

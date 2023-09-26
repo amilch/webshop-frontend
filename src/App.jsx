@@ -1,5 +1,6 @@
 import { ChakraProvider, Container, Text } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet, RootRoute, Route, Router, RouterProvider } from '@tanstack/react-router';
 import { WebStorageStateStore } from 'oidc-client-ts';
 import { useEffect, useState } from 'react';
@@ -97,6 +98,7 @@ function App() {
               <ChakraProvider theme={theme}>
                 <RouterProvider router={router} />
               </ChakraProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
           </AxiosProvider>
         </AuthProvider>

@@ -15,7 +15,7 @@ export default function Checkout() {
   const [paymentScreen, setPaymentScreen] = useState(false)
   const [shippingAddress, setShippingAddress] = useState({})
   const [paymentDetails, setPaymentDetails] = useState({})
-  const [orderSuccessful, setOrderSuccessful] = useState(true)
+  const [orderSuccessful, setOrderSuccessful] = useState(false)
   const proceed = (values) => {
     setShippingAddress(values)
     setPaymentScreen(true)
@@ -26,8 +26,13 @@ export default function Checkout() {
       order: {
         items: cart.items,
         total: 3000,
+        mail: paymentDetails.mail,
         shipping_address: JSON.stringify(shippingAddress),
-        payment_data: JSON.stringify(paymentDetails),
+        payment_data: JSON.stringify({
+          first_name: paymentDetails.first_name,
+          last_name: paymentDetails.last_name,
+          iban: paymentDetails.iban,
+        }),
       }
     }
     createOrder.mutate(payload, {

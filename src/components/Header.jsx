@@ -3,9 +3,10 @@ import { useAuth } from "react-oidc-context";
 import { Link as RouterLink, useNavigate } from "@tanstack/react-router";
 
 import useCart from "../hooks/useCart";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Header() {
-  const navigate = useNavigate({ from: '/backend' })
+  const queryClient = useQueryClient()
   const auth = useAuth()
   const { data: cart } = useCart()
 
@@ -16,7 +17,7 @@ export default function Header() {
       activeProps={{ style: { fontWeight: 'bold' } }}
       {...props}>{props.name}</ChakraLink>)
 
-  const cartSize = cart ? ` (${cart?.items.length})` : ''
+  const cartSize = cart?.items.length > 0 ? ` (${cart?.items.length})` : ''
 
   return (
     <Box p={4} bg='gray.50' py={6}>
@@ -27,7 +28,9 @@ export default function Header() {
           && <NavItem name='Abmelden' onClick={() => {
             auth.removeUser()
           }} />
-          || <NavItem name='Anmelden' onClick={() => auth.signinRedirect()} />}
+          || <NavItem name='Anmelden' onClick={() => {
+            auth.signinRedirect()
+          }} />}
         {auth.isAuthenticated && auth.user?.profile.client_roles.includes('admin')
           && <NavItem name='Backend' to='/backend' />}
       </HStack>

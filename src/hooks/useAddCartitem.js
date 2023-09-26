@@ -13,6 +13,6 @@ export default function useAddCartItem() {
         ...cartItem,
         price: moneyToInt(cartItem.price),
       }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] })
+    onSuccess: () => queryClient.refetchQueries({ queryKey: ['cart'] })
   })
 }

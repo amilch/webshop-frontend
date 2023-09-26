@@ -1,15 +1,16 @@
 import { Button, VStack, Heading, Text, SimpleGrid, FormControl, GridItem, FormLabel, Input, NumberInput, Checkbox, useBreakpointValue } from '@chakra-ui/react'
 import { Formik, Field, Form } from 'formik'
 
-export default function CheckoutPayment({ values, finish }) {
+export default function CheckoutPayment({ shippingAddress, values, finish }) {
   const colSpan = useBreakpointValue({ base: 2, md: 1 })
 
   return (
     <Formik
       initialValues={{
-        first_name: '',
-        last_name: '',
+        first_name: shippingAddress.first_name ?? '',
+        last_name: shippingAddress.last_name ?? '',
         iban: '',
+        mail: '',
         ...values,
       }}
       onSubmit={(values, action) => {
@@ -23,6 +24,16 @@ export default function CheckoutPayment({ values, finish }) {
             <Heading size='2xl'>Zahlungsdaten</Heading>
           </VStack>
           <SimpleGrid columns={2} columnGap={3} rowGap={6} w='full'>
+            <GridItem colSpan={2}>
+              <Field name='mail'>
+                {({ field }) =>
+                  <FormControl>
+                    <FormLabel>E-Mail-Adresse</FormLabel>
+                    <Input placeholder="leodoe@provider.cc" {...field} />
+                  </FormControl>
+                }
+              </Field>
+            </GridItem>
             <GridItem colSpan={colSpan}>
               <Field name='first_name'>
                 {({ field }) =>
@@ -46,12 +57,12 @@ export default function CheckoutPayment({ values, finish }) {
             <GridItem colSpan={2}>
               <Field name='iban'>
                 {({ field }) =>
-              <FormControl>
-                <FormLabel>IBAN</FormLabel>
-                <Input placeholder="DE75512108001245126199" {...field}/>
-              </FormControl>
+                  <FormControl>
+                    <FormLabel>IBAN</FormLabel>
+                    <Input placeholder="DE75512108001245126199" {...field} />
+                  </FormControl>
                 }
-        </Field>
+              </Field>
             </GridItem>
             <GridItem colSpan={2}>
               <Button mt={3} size='lg' w='full' type='submit' isLoading={props.isSubmitting}>

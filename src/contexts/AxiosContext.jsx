@@ -19,7 +19,7 @@ export const AxiosProvider = ({ children }) => {
 
   authAxios.interceptors.request.use(
     config => {
-      if (!config.headers.Authorization && auth.isAuthenticated && auth.user?.access_token) {
+      if (!config.headers.Authorization && auth.isAuthenticated && auth.user?.access_token && !auth.user?.expired) {
         config.headers.Authorization = `Bearer ${auth.user?.access_token}`
       }
       if (config.method == 'get') {
