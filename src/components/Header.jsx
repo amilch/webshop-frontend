@@ -28,7 +28,7 @@ export default function Header() {
             auth.removeUser()
           }} />
           || <NavItem name='Anmelden' onClick={() => auth.signinRedirect()} />}
-        {auth.user?.profile.client_roles.includes('admin')
+        {auth.isAuthenticated && auth.user?.profile.client_roles.includes('admin')
           && <NavItem name='Backend' to='/backend' />}
       </HStack>
     </Box>

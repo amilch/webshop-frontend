@@ -14,7 +14,8 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import theme from './theme';
 import BackendCatalog from './pages/backend/Catalog';
-import BackendInventory from './pages/backend/Inventory';
+import BackendWarehouse from './pages/backend/Warehouse';
+import BackendBilling from './pages/backend/Billing';
 
 const oidcConfig = {
   authority: "http://auth.webshop.local/realms/webshop",
@@ -61,12 +62,17 @@ const backendCatalogRoute = new Route({
   component: BackendCatalog,
 })
 
-const backendInventoryRoute = new Route({
+const backendWarehouseRoute = new Route({
   getParentRoute: () => backendRoute,
-  path: '/inventory',
-  component: BackendInventory,
+  path: '/warehouse',
+  component: BackendWarehouse,
 })
 
+const backendBillingRoute = new Route({
+  getParentRoute: () => backendRoute,
+  path: '/billing',
+  component: BackendBilling,
+})
 
 const routeTree = rootRoute.addChildren([
   catalogRoute,
@@ -74,7 +80,8 @@ const routeTree = rootRoute.addChildren([
   checkoutRoute,
   backendRoute.addChildren([
     backendCatalogRoute,
-    backendInventoryRoute,
+    backendWarehouseRoute,
+    backendBillingRoute,
   ]),
 ])
 const router = new Router({ routeTree })

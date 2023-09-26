@@ -2,13 +2,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AxiosContext } from "../contexts/AxiosContext";
 
-export default function useCreateInventoryProduct() {
+export default function useUpdateOrder() {
   const queryClient = useQueryClient()
   const { authAxios } = useContext(AxiosContext)
 
   return useMutation({
-    mutationFn: ({ product }) =>
-      authAxios.post('/inventory/products', product),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['inventoryProducts'] })
+    mutationFn: ({ order }) =>
+      authAxios.patch('/billing/orders', order),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['orders'] })
   })
 }

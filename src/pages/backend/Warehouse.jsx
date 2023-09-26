@@ -1,12 +1,12 @@
 import { NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, HStack, Heading, LinkBox, Button, Input, SimpleGrid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, VStack, useDisclosure, FormLabel, FormControl, Select, Textarea, LinkOverlay, NumberInput } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
-import useCreateInventoryProduct from '../../hooks/useCreateInventoryProduct';
-import useInventoryProducts from '../../hooks/useInventoryProducts';
+import useUpdateInventoryProduct from '../../hooks/useUpdateInventoryProduct';
+import useWarehouseProducts from '../../hooks/useWarehouseProducts';
 import { useState } from 'react';
 
-export default function BackendInventory() {
-  const { data: inventoryProducts } = useInventoryProducts()
-  const createInventoryProduct = useCreateInventoryProduct()
+export default function BackendWarehouse() {
+  const { data: warehouseProducts } = useWarehouseProducts()
+  const updateInventoryProduct = useUpdateInventoryProduct()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [selectedProduct, setSelectedProduct] = useState(null)
 
@@ -20,7 +20,7 @@ export default function BackendInventory() {
               quantity: selectedProduct?.quantity,
             }}
             onSubmit={(values, action) => {
-              createInventoryProduct.mutate({
+              updateInventoryProduct.mutate({
                 product: {
                   ...selectedProduct,
                   quantity: Number(values.quantity),
@@ -83,8 +83,8 @@ export default function BackendInventory() {
   return (
     <>
       <VStack spacing={8} w='full'>
-        <HStack w='full' px={8}>
-          <Heading size='md'>Inventory products</Heading>
+        <HStack w='full' px={6}>
+          <Heading size='md'>Warehouse products</Heading>
           <Spacer />
         </HStack>
         <TableContainer p={0} w='full'>
@@ -97,8 +97,8 @@ export default function BackendInventory() {
               </Tr>
             </Thead>
             <Tbody>
-              {/* {JSON.stringify(inventoryProducts)} */}
-              {inventoryProducts?.map(product =>
+              {/* {JSON.stringify(warehouseProducts)} */}
+              {warehouseProducts?.map(product =>
                 <LinkBox as={Tr} key={product.sku}>
                   <Td>
                     <LinkOverlay href="#" onClick={() => {

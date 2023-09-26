@@ -7,8 +7,8 @@ export default function Backend() {
 
   const links = [
     { name: 'Catalog', path: '/backend/catalog' },
-    { name: 'Inventory', path: '/backend/inventory' },
-    { name: 'Orders', path: '/backend/orders' },
+    { name: 'Warehouse', path: '/backend/warehouse' },
+    { name: 'Billing', path: '/backend/billing' },
   ]
 
   return (

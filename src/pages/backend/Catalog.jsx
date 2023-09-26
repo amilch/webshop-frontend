@@ -25,7 +25,6 @@ export default function BackendCatalog() {
               weight: '',
             }}
             onSubmit={(values, action) => {
-              console.log(values)
               createProduct.mutate({
                 product: {
                   category_id: Number(values.category_id),

@@ -1,9 +1,10 @@
 import { IconButton, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, VStack, HStack, Divider, Heading, SimpleGrid, Text, Container, Box, Center, ButtonGroup } from '@chakra-ui/react'
-
-import useCart from "../hooks/useCart";
 import { FiRefreshCw } from 'react-icons/fi'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { useState } from 'react';
+import { Link as RouterLink } from '@tanstack/react-router';
+
+import useCart from "../hooks/useCart";
 import useUpsertCartItem from '../hooks/useUpsertCartItem';
 
 export default function Cart() {
@@ -47,7 +48,6 @@ export default function Cart() {
   }
 
   return (
-    <Container maxW='container.md'>
       <VStack w='full' h='full' p={10} spacing={10} alignItems='flex-start'>
         <Heading size='2xl'>Dein Warenkorb</Heading>
         {cart?.items.map(cartItem =>
@@ -65,7 +65,7 @@ export default function Cart() {
         <VStack spacing={4} alignItems="stretch" w="full">
           <HStack justifyContent="space-between">
             <Text color='secondaryText'>Versand</Text>
-            <Heading size="sm">4,50 €</Heading>
+            <Text color='secondaryText'>Wird im nächsten Schritt berechnet</Text>
           </HStack>
         </VStack>
         <Divider />
@@ -74,9 +74,8 @@ export default function Cart() {
           <Heading size="lg">{cart?.total} €</Heading>
         </HStack>
         <Center w='full' mt={3}>
-          <Button size='lg' w='full'>Zur Kasse</Button>
+          <Button as={RouterLink} to='/checkout' size='lg' w={['full', '30rem']}>Zur Kasse</Button>
         </Center>
       </VStack>
-    </Container>
   )
 }
