@@ -1,26 +1,25 @@
 import { Select, Link as ChakraLink, HStack, Button, IconButton, ButtonGroup, Card, CardBody, CardFooter, Divider, Heading, Image, SimpleGrid, Text, VStack, Flex, Spacer, Tooltip } from "@chakra-ui/react"
 import { Link as RouterLink, useSearch } from "@tanstack/react-router"
 import { TbShoppingCartPlus } from 'react-icons/tb'
-import useUpdateCartItem from "../hooks/useUpdateCartItem"
+import { Form, Field, Formik, useFormik } from "formik"
+
 import { useState } from "react"
 import { useAuth } from "react-oidc-context"
-import { Form, Field, Formik, useFormik } from "formik"
+import useAddCartItem from "../hooks/useAddCartitem"
 
 const quantityOptions = [...Array(10).keys()].map((n) => n + 1)
 
 export default function ProductList({ products }) {
-  const updateCartItem = useUpdateCartItem()
+  const addCartItem = useAddCartItem()
 
 
   const AddToCartForm = ({product}) => (
     <Formik
       initialValues={{ quantity: 1 }}
       onSubmit={(values, action) => {
-        updateCartItem.mutate({
+        addCartItem.mutate({
           cartItem: {
-          sku: product.sku,
-          name: product.name,
-          price: product.price.replace(/\D/, ''),
+            ...product,
           ...values,
         }})
         action.setSubmitting(false)

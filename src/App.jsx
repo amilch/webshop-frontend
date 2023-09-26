@@ -5,13 +5,16 @@ import { WebStorageStateStore } from 'oidc-client-ts';
 import { useEffect, useState } from 'react';
 import { AuthProvider, hasAuthParams, useAuth } from 'react-oidc-context';
 
-import Header from './components/Header';
 import { AxiosProvider } from './contexts/AxiosContext';
 import { UUIDProvider } from './contexts/UUIDContext';
+import Root from './pages/Root';
 import Backend from './pages/Backend';
 import Catalog from './pages/Catalog';
+import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import theme from './theme';
+import BackendCatalog from './pages/backend/Catalog';
+import BackendInventory from './pages/backend/Inventory';
 
 const oidcConfig = {
   authority: "http://auth.webshop.local/realms/webshop",
@@ -25,14 +28,7 @@ const oidcConfig = {
 const queryClient = new QueryClient()
 
 const rootRoute = new RootRoute({
-  component: () => (
-    <>
-      <Header />
-      <Container maxW='container.lg' p={0}>
-        <Outlet />
-      </Container>
-    </>
-  ),
+  component: Root
 })
 
 const catalogRoute = new Route({
@@ -41,17 +37,10 @@ const catalogRoute = new Route({
   component: Catalog
 })
 
-const backendRoute = new Route({
+const cartRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/backend',
-  component: () => {
-    const auth = useAuth()
-    return (
-      <>
-      {auth.isAuthenticated && auth.user?.profile.client_roles.includes('admin') &&
-       <Backend /> || <Text>Du hast keine Berechtigung für den Backend Bereich.</Text>}
-      </>
-    )},
+  path: '/cart',
+  component: Cart,
 })
 
 const checkoutRoute = new Route({
@@ -60,10 +49,33 @@ const checkoutRoute = new Route({
   component: Checkout
 })
 
+const backendRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/backend',
+  component: Backend,
+})
+
+const backendCatalogRoute = new Route({
+  getParentRoute: () => backendRoute,
+  path: '/catalog',
+  component: BackendCatalog,
+})
+
+const backendInventoryRoute = new Route({
+  getParentRoute: () => backendRoute,
+  path: '/inventory',
+  component: BackendInventory,
+})
+
+
 const routeTree = rootRoute.addChildren([
   catalogRoute,
-  backendRoute,
+  cartRoute,
   checkoutRoute,
+  backendRoute.addChildren([
+    backendCatalogRoute,
+    backendInventoryRoute,
+  ]),
 ])
 const router = new Router({ routeTree })
 
