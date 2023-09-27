@@ -22,7 +22,6 @@ export default function BackendCatalog() {
               sku: '',
               description: '',
               price: '',
-              weight: '',
             }}
             onSubmit={(values, action) => {
               createProduct.mutate({
@@ -32,7 +31,6 @@ export default function BackendCatalog() {
                   sku: values.sku,
                   description: values.description,
                   price: Number(values.price),
-                  weight: Number(values.weight),
                 }
               },
                 {
@@ -84,21 +82,11 @@ export default function BackendCatalog() {
                         )}
                       </Field>
                     </GridItem>
-                    <GridItem colSpan={1}>
+                    <GridItem colSpan={2}>
                       <Field name='price'>
                         {({ field }) => (
                           <FormControl>
                             <FormLabel>Price</FormLabel>
-                            <Input {...field} />
-                          </FormControl>
-                        )}
-                      </Field>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                      <Field name='weight'>
-                        {({ field }) => (
-                          <FormControl>
-                            <FormLabel>Weight</FormLabel>
                             <Input {...field} />
                           </FormControl>
                         )}
@@ -138,7 +126,6 @@ export default function BackendCatalog() {
         <Td>{product.name}</Td>
         <Td>{product.sku}</Td>
         <Td>{product.price} €</Td>
-        <Td>{product.weight} g</Td>
       </Tr>
     )
   }
@@ -159,7 +146,6 @@ export default function BackendCatalog() {
                 <Th>name</Th>
                 <Th>sku</Th>
                 <Th>price</Th>
-                <Th>weight</Th>
               </Tr>
             </Thead>
             <Tbody>
