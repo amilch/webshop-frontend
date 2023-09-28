@@ -1,4 +1,4 @@
-import { NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, HStack, Heading, LinkBox, Button, Input, SimpleGrid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, VStack, useDisclosure, FormLabel, FormControl, Select, Textarea, LinkOverlay, NumberInput } from '@chakra-ui/react';
+import { NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, HStack, Heading, LinkBox, Button, Input, SimpleGrid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, VStack, useDisclosure, FormLabel, FormControl, Select, Textarea, LinkOverlay, NumberInput, Box } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
 import useOrders from '../../hooks/useOrders';
@@ -12,9 +12,12 @@ export default function BackendBilling() {
   const { data: orders } = useOrders()
   const updateOrder = useUpdateOrder()
 
+  const shippingAddress = selectedOrder && JSON.parse(selectedOrder?.shipping_address)
+  const paymentData = selectedOrder && JSON.parse(selectedOrder?.payment_data)
+
   const OrderForm = () => {
     return (
-      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size='sm'>
+      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size='xl'>
         <ModalOverlay />
         <ModalContent>
           <Formik
@@ -43,20 +46,49 @@ export default function BackendBilling() {
                 <ModalHeader>Order #{selectedOrder.id}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
-                  <VStack>
-                      <Field name='status'>
-                        {({ field }) => (
-                          <FormControl>
-                            <FormLabel>Status</FormLabel>
+                  <VStack spacing={6} align='left' w='full'>
+                    <Box>
+                      <Heading size='sm'>Created</Heading>
+                      <Text>{formatDate(selectedOrder.created)}</Text>
+                    </Box>
+                    <Field name='status'>
+                      {({ field }) => (
+                        <FormControl>
+                          <FormLabel fontWeight='bold'>Status</FormLabel>
                           <Select {...field}>
                             {Object.entries(OrderStatus).map(([key, value]) =>
                               <option value={key}>{value}</option>
                             )}
                           </Select>
-                          </FormControl>
-                        )}
-                      </Field>
-              </VStack>
+                        </FormControl>
+                      )}
+                    </Field>
+                    <Box>
+                      <Heading size='sm'>Mail address</Heading>
+                      <Text>{selectedOrder.mail}</Text>
+                    </Box>
+                    <Box>
+                      <Heading size='sm'>Shipping address</Heading>
+                      <Text>{shippingAddress.first_name} {shippingAddress.last_name}</Text>
+                      <Text>{shippingAddress.street_nr}</Text>
+                      <Text>{shippingAddress.plz} {shippingAddress.city}</Text>
+                    </Box>
+                    <Box>
+                      <Heading size='sm'>Payment details</Heading>
+                      <Text>{paymentData.first_name} {paymentData.last_name}</Text>
+                      <Text>{paymentData.iban}</Text>
+                    </Box>
+                    <Box>
+                      <Heading size='sm'>Items</Heading>
+                      {selectedOrder.items.map(item =>
+                        <Text>{item.quantity}x {item.sku}</Text>
+                      )}
+                    </Box>
+                    <Box>
+                      <Heading size='sm'>Total: {selectedOrder.total} €</Heading>
+                      <Text>Shipping: {selectedOrder.shipping_cost} €</Text>
+                    </Box>
+                  </VStack>
                 </ModalBody>
 
                 <ModalFooter>
@@ -99,13 +131,13 @@ export default function BackendBilling() {
                       setSelectedOrder(order)
                       onOpen()
                     }}>
-                    {order.id}
+                      {order.id}
                     </LinkOverlay>
                   </Td>
-                  <Td>{ formatDate(order.created) }</Td>
+                  <Td>{formatDate(order.created)}</Td>
                   <Td isNumeric>{order.total} €</Td>
-                <Td>{OrderStatus[order.status]}</Td>
-                <Td>{order.mail}</Td>
+                  <Td>{OrderStatus[order.status]}</Td>
+                  <Td>{order.mail}</Td>
                 </LinkBox>
               )}
             </Tbody>
