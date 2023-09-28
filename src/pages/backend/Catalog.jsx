@@ -51,7 +51,7 @@ export default function BackendCatalog() {
                 <ModalBody pb={6}>
                   <SimpleGrid columns={2} columnGap={3} rowGap={6} w='full'>
                     <GridItem colSpan={2}>
-                      <Field name='category'>
+                      <Field name='category_id'>
                         {({ field }) => (
                           <FormControl>
                             <Select {...field} placeholder='Select category'>

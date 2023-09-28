@@ -1,4 +1,4 @@
-import { Grid, GridItem, Link, List, ListItem } from '@chakra-ui/react';
+import { Grid, GridItem, Link, List, ListItem, Text } from '@chakra-ui/react';
 import { Outlet, Link as RouterLink } from '@tanstack/react-router';
 import { useAuth } from 'react-oidc-context';
 

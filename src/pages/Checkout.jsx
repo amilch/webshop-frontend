@@ -16,24 +16,22 @@ export default function Checkout() {
   const deleteCart = useDeleteCart()
   const [paymentScreen, setPaymentScreen] = useState(false)
   const [shippingAddress, setShippingAddress] = useState({})
-  const [paymentDetails, setPaymentDetails] = useState({})
   const [orderSuccessful, setOrderSuccessful] = useState(false)
   const proceed = (values) => {
     setShippingAddress(values)
     setPaymentScreen(true)
   }
   const finish = (values) => {
-    setPaymentDetails(values)
     const payload = {
       order: {
         items: cart.items,
-        total: 3000,
-        mail: paymentDetails.mail,
+        total: cart.total,
+        mail: values.mail,
         shipping_address: JSON.stringify(shippingAddress),
         payment_data: JSON.stringify({
-          first_name: paymentDetails.first_name,
-          last_name: paymentDetails.last_name,
-          iban: paymentDetails.iban,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          iban: values.iban,
         }),
       }
     }
@@ -67,8 +65,7 @@ export default function Checkout() {
         <Flex h={{ base: 'auto', md: '100vh' }} direction={{ base: 'column-reverse', md: 'row' }}>
           {!paymentScreen
             && <CheckoutShipping values={shippingAddress} proceed={proceed} />
-            || <CheckoutPayment values={paymentDetails} shippingAddress={shippingAddress}
-              finish={finish} />}
+            || <CheckoutPayment shippingAddress={shippingAddress} finish={finish} />}
           <CheckoutCart />
         </Flex>
         :
@@ -80,7 +77,7 @@ export default function Checkout() {
             <Link as={RouterLink} fontSize='xl' to='/' mt={4}>
               <HStack px={10} align='center'>
                 <Heading size='md'>
-                  Zum Katalog
+                  Weiter einkaufen
                 </Heading>
                 <FiArrowRight />
               </HStack>

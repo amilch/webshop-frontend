@@ -32,7 +32,7 @@ export default function Header() {
             auth.signinRedirect()
           }} />}
         {auth.isAuthenticated && auth.user?.profile.client_roles.includes('admin')
-          && <NavItem name='Backend' to='/backend' />}
+          && <NavItem name='Backend' to='/backend/catalog' />}
       </HStack>
     </Box>
   )
