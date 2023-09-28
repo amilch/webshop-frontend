@@ -13,15 +13,16 @@ export default function ProductList({ products }) {
   const addCartItem = useAddCartItem()
 
 
-  const AddToCartForm = ({product}) => (
+  const AddToCartForm = ({ product }) => (
     <Formik
       initialValues={{ quantity: 1 }}
       onSubmit={(values, action) => {
         addCartItem.mutate({
           cartItem: {
             ...product,
-          ...values,
-        }})
+            ...values,
+          }
+        })
         action.setSubmitting(false)
       }}
     >
@@ -30,7 +31,7 @@ export default function ProductList({ products }) {
           <Field name='quantity'>
             {({ field, form }) => (
               <HStack spacing={4}>
-                <Select {...field} w={20}>
+                <Select {...field} w={20} isDisabled={!product.in_stock}>
                   {quantityOptions.map((n) => (
                     <option value={n}>{n}</option>
                   ))}
@@ -39,7 +40,10 @@ export default function ProductList({ products }) {
                   <IconButton
                     type='submit'
                     isLoading={props.isSubmitting}
-                    icon={<TbShoppingCartPlus />} />
+                    icon={<TbShoppingCartPlus />}
+                    isDisabled={!product.in_stock}
+                  />
+
                 </Tooltip>
               </HStack>
             )}
@@ -57,15 +61,18 @@ export default function ProductList({ products }) {
             w='full' p={8} align='center' border='1px'
             borderColor='gray.100' key={product.id}
           >
-            <VStack align='stretch'>
+            <VStack align='stretch' pr={8}>
               <Heading size='sm' flex='1'>{product.name}</Heading>
-              <Text>{product.description}asdfuahsdfuha89sdhf9ahsdf</Text>
+              <Text>{product.description}</Text>
             </VStack>
             <Spacer />
-            <HStack spacing={4}>
-              <Heading size='sm' >{product.price} €</Heading>
-              <AddToCartForm product={product}/>
-            </HStack>
+            <VStack pt={4}>
+              <HStack spacing={4}>
+                <Heading size='sm' whiteSpace='nowrap'>{product.price} €</Heading>
+                <AddToCartForm product={product} />
+              </HStack>
+              <Text fontSize='sm'>{ !product.in_stock && 'Aktuell leider nicht auf Lager' }</Text>
+            </VStack>
           </Flex>
         )
       })}

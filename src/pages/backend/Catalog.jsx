@@ -1,4 +1,5 @@
 import { HStack, Heading, LinkBox, Button, Input, SimpleGrid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, VStack, useDisclosure, FormLabel, FormControl, Select, Textarea } from '@chakra-ui/react';
+import { FiCheck, FiX } from 'react-icons/fi';
 import useProducts from '../../hooks/useProducts';
 import { Field, Form, Formik } from 'formik';
 import useCreateProduct from '../../hooks/useCreateProduct';
@@ -126,6 +127,7 @@ export default function BackendCatalog() {
         <Td>{product.name}</Td>
         <Td>{product.sku}</Td>
         <Td>{product.price} €</Td>
+        <Td>{product.in_stock && <FiCheck /> || <FiX />}</Td>
       </Tr>
     )
   }
@@ -146,6 +148,7 @@ export default function BackendCatalog() {
                 <Th>name</Th>
                 <Th>sku</Th>
                 <Th>price</Th>
+                <Th>in stock</Th>
               </Tr>
             </Thead>
             <Tbody>
