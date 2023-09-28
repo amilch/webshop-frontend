@@ -1,14 +1,16 @@
 import { Button, VStack, Heading, Text, SimpleGrid, FormControl, GridItem, FormLabel, Input, NumberInput, Checkbox, useBreakpointValue } from '@chakra-ui/react'
 import { Formik, Field, Form } from 'formik'
+import { useAuth } from 'react-oidc-context'
 
 export default function CheckoutShipping({ values, proceed }) {
   const colSpan = useBreakpointValue({ base: 2, md: 1 })
+  const auth = useAuth()
 
   return (
     <Formik
       initialValues={{
-        first_name: '',
-        last_name: '',
+        first_name: auth.user?.profile.given_name ?? '',
+        last_name: auth.user?.profile.family_name ?? '',
         street_nr: '',
         plz: '',
         city: '',
