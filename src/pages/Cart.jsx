@@ -63,13 +63,6 @@ export default function Cart() {
         </HStack>
       )}
       <Divider />
-      <VStack spacing={4} alignItems="stretch" w="full">
-        <HStack justifyContent="space-between">
-          <Text color='secondaryText'>Versand</Text>
-          <Text color='secondaryText'>Wird im nächsten Schritt berechnet</Text>
-        </HStack>
-      </VStack>
-      <Divider />
       <HStack justifyContent="space-between" w="full">
         <Text color='secondaryText'>Gesamtsumme</Text>
         <Heading size="lg">{cart?.total} €</Heading>

@@ -22,11 +22,6 @@ export default function CheckoutCart() {
       </VStack>
       <VStack spacing={6} w='full'>
       <Divider />
-      <HStack justifyContent="space-between" p={0} w='full'>
-        <Text color='secondaryText'>Versand</Text>
-        <Heading size="sm">????</Heading>
-      </HStack>
-      <Divider />
       <HStack justifyContent="space-between" w="full">
         <Text color='secondaryText'>Gesamtsumme</Text>
         <Heading size="lg">{cart?.total}</Heading>
