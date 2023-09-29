@@ -28,7 +28,7 @@ export default function CheckoutShipping({ values, proceed }) {
             <GridItem colSpan={colSpan}>
               <Field name='first_name'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Vorname</FormLabel>
                     <Input placeholder="Leo" {...field} />
                   </FormControl>
@@ -38,7 +38,7 @@ export default function CheckoutShipping({ values, proceed }) {
             <GridItem colSpan={colSpan}>
               <Field name='last_name'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Nachname</FormLabel>
                     <Input placeholder="Doe" {...field} />
                   </FormControl>
@@ -48,7 +48,7 @@ export default function CheckoutShipping({ values, proceed }) {
             <GridItem colSpan={2}>
               <Field name='street_nr'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Straße, Nr.</FormLabel>
                     <Input placeholder="Strasse 22" {...field}  />
                   </FormControl>
@@ -58,7 +58,7 @@ export default function CheckoutShipping({ values, proceed }) {
             <GridItem colSpan={colSpan}>
               <Field name='plz'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>PLZ</FormLabel>
                     <Input placeholder="10299" type='numeric' {...field} />
                   </FormControl>
@@ -68,7 +68,7 @@ export default function CheckoutShipping({ values, proceed }) {
             <GridItem colSpan={colSpan}>
               <Field name='city'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>City</FormLabel>
                     <Input placeholder="Berlin" {...field} />
                   </FormControl>

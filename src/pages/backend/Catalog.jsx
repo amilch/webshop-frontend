@@ -4,6 +4,7 @@ import useProducts from '../../hooks/useProducts';
 import { Field, Form, Formik } from 'formik';
 import useCreateProduct from '../../hooks/useCreateProduct';
 import useCategories from '../../hooks/useCategories';
+import { moneyToInt } from '../../utils';
 
 export default function BackendCatalog() {
   const { data: products } = useProducts()
@@ -31,7 +32,7 @@ export default function BackendCatalog() {
                   name: values.name,
                   sku: values.sku,
                   description: values.description,
-                  price: Number(values.price),
+                  price: moneyToInt(values.price),
                 }
               },
                 {
@@ -54,7 +55,7 @@ export default function BackendCatalog() {
                     <GridItem colSpan={2}>
                       <Field name='category_id'>
                         {({ field }) => (
-                          <FormControl>
+                          <FormControl isRequired>
                             <Select {...field} placeholder='Select category'>
                               {categories.map(category => (
                                 <option value={category.id} key={category.id}>{category.name}</option>
@@ -66,7 +67,7 @@ export default function BackendCatalog() {
                     <GridItem colSpan={2}>
                       <Field name='name'>
                         {({ field }) => (
-                          <FormControl>
+                          <FormControl isRequired>
                             <FormLabel>Name</FormLabel>
                             <Input {...field} />
                           </FormControl>
@@ -76,7 +77,7 @@ export default function BackendCatalog() {
                     <GridItem colSpan={2}>
                       <Field name='sku'>
                         {({ field }) => (
-                          <FormControl>
+                          <FormControl isRequired>
                             <FormLabel>sku</FormLabel>
                             <Input {...field} />
                           </FormControl>
@@ -86,9 +87,12 @@ export default function BackendCatalog() {
                     <GridItem colSpan={2}>
                       <Field name='price'>
                         {({ field }) => (
-                          <FormControl>
+                          <FormControl isRequired>
                             <FormLabel>Price</FormLabel>
-                            <Input {...field} />
+                            <Input
+                              onChange={(e) => props.setValues({ ...props.values, price: e.target.value.replace(/[^0-9,]/,''), })}
+                              value = { props.values.price }
+                                    />
                           </FormControl>
                         )}
                       </Field>

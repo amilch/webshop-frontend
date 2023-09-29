@@ -1,5 +1,8 @@
-const moneyToInt = (money) =>
-  money.replace(/\D/, '')
+const moneyToInt = (money) => {
+    const number = money.split(',')
+    if (number.length == 1) return Number(number[0] * 100)
+    else return Number(number[0]*100) + Number(number[1]);
+}
 
 const OrderStatus = {
   0: 'created',

@@ -29,7 +29,7 @@ export default function CheckoutPayment({ shippingAddress, values, finish }) {
             <GridItem colSpan={2}>
               <Field name='mail'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>E-Mail-Adresse</FormLabel>
                     <Input placeholder="leodoe@provider.cc" {...field} />
                   </FormControl>
@@ -39,7 +39,7 @@ export default function CheckoutPayment({ shippingAddress, values, finish }) {
             <GridItem colSpan={colSpan}>
               <Field name='first_name'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Vorname</FormLabel>
                     <Input placeholder="Leo" {...field} />
                   </FormControl>
@@ -49,7 +49,7 @@ export default function CheckoutPayment({ shippingAddress, values, finish }) {
             <GridItem colSpan={colSpan}>
               <Field name='last_name'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Nachname</FormLabel>
                     <Input placeholder="Doe" {...field} />
                   </FormControl>
@@ -59,7 +59,7 @@ export default function CheckoutPayment({ shippingAddress, values, finish }) {
             <GridItem colSpan={2}>
               <Field name='iban'>
                 {({ field }) =>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>IBAN</FormLabel>
                     <Input placeholder="DE75512108001245126199" {...field} />
                   </FormControl>
